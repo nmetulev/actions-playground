@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/nmetulev/actions-playground/issues"
   },
-  "homepage": "https://github.com/nmetulev/actions-playground#readme"
+  "homepage": "https://github.com/nmetulev/actions-playground#readme",
+  "dependencies": {
+    "@octokit/rest": "^18.5.3"
+  }
 }
