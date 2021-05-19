@@ -26,5 +26,9 @@ jobs:
         run: |
           npm install
 
+      - name: Get current package version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
       - name: Upload assets
-        run: node uploadArtifact.js ${{secrets.GITHUB_TOKEN}} 1.6
+        run: node uploadArtifact.js ${{secrets.GITHUB_TOKEN}} ${{steps.package-version.outputs.current-version}}
