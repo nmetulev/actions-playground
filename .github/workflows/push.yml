@@ -22,5 +22,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
+      - name: NPM Install
+        run: |
+          npm install
+
       - name: Upload assets
         run: node uploadArtifact.js ${{secrets.GITHUB_TOKEN}} 1.6
