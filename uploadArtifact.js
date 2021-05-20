@@ -27,6 +27,7 @@ const octokit = new Octokit({auth});
     let release;
 
     if (!filteredReleases.length) {
+        console.log(`No release found for ${version} - creating a new draft release`);
         release = (await octokit.rest.repos.createRelease({
             owner,
             repo,
@@ -35,17 +36,17 @@ const octokit = new Octokit({auth});
             draft: true
         })).data;
     } else {
+        console.log(`Found existing release for ${version}`);
         release = filteredReleases[0];
     }
 
     const file = fs.readFileSync('solution/mgt-spfx.sppkg');
-
     const name = `mgt-spfx-${version}.sppkg`;
 
     if (release.assets && release.assets.length) {
         const asset = release.assets.filter(a => a.name === name)[0];
         if (asset) {
-            console.log('deleting asset', asset)
+            console.log(`found existing asset for release ${version} - deleting`)
             await octokit.rest.repos.deleteReleaseAsset({
                 owner,
                 repo,
@@ -54,6 +55,7 @@ const octokit = new Octokit({auth});
         }
     }
 
+    console.log(`uploading asset for ${version}`)
     await octokit.rest.repos.uploadReleaseAsset({
         owner,
         repo,
@@ -61,4 +63,6 @@ const octokit = new Octokit({auth});
         data: file,
         name: `mgt-spfx-${version}.sppkg`
     });
+
+    console.log('done')
 })();
