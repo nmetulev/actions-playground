@@ -4,7 +4,7 @@ const { Octokit } = require("@octokit/rest");
 const fs = require('fs');
 
 if (process.argv.length < 4) {
-    console.log('usage: uploadSpfxSolution <github_token> <package_version>');
+    console.log('usage: uploadSpfxSolution.js <github_token> <package_version>');
     
     return;
 }
@@ -24,7 +24,7 @@ const octokit = new Octokit({auth});
         repo
     })
     
-    const filteredReleases = releases.data.filter(r => r.name.includes(version));
+    const filteredReleases = releases.data.filter(r => r.tag_name.includes(version));
     let release;
 
     if (!filteredReleases.length) {

@@ -30,5 +30,5 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
 
-      - name: Upload assets
-        run: node uploadArtifact.js ${{secrets.GITHUB_TOKEN}} ${{steps.package-version.outputs.current-version}}
+      - name: Attach release asset
+        run: node uploadSpfxSolution.js ${{secrets.GITHUB_TOKEN}} ${{steps.package-version.outputs.current-version}}
