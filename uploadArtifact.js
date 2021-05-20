@@ -13,6 +13,7 @@ const auth = process.argv[2];
 const version = process.argv[3];
 const repo = 'actions-playground';
 const owner = 'nmetulev';
+const assetPath = 'solution/mgt-spfx.sppkg';
 
 const octokit = new Octokit({auth});
 
@@ -36,11 +37,11 @@ const octokit = new Octokit({auth});
             draft: true
         })).data;
     } else {
-        console.log(`Found existing release for ${version}`);
+        console.log(`found existing release for ${version}`);
         release = filteredReleases[0];
     }
 
-    const file = fs.readFileSync('solution/mgt-spfx.sppkg');
+    const file = fs.readFileSync(assetPath);
     const name = `mgt-spfx-${version}.sppkg`;
 
     if (release.assets && release.assets.length) {
@@ -55,7 +56,7 @@ const octokit = new Octokit({auth});
         }
     }
 
-    console.log(`uploading asset for ${version}`)
+    console.log(`attaching ${assetPath} as ${name} to release`)
     await octokit.rest.repos.uploadReleaseAsset({
         owner,
         repo,
